@@ -13,23 +13,28 @@ const PORT = process.env.PORT || 5000;
 
 // List of allowed origins
 const allowedOrigins = [
+  'http://localhost:5173',
   'https://lead-manage-two.vercel.app',
   'https://lead-manage-23w81bhfp-sumits-projects-18000165.vercel.app',
 ];
 
 const corsOptions = {
   origin: (origin: string | undefined, callback: (err: any, allow?: boolean) => void) => {
-    if (!origin) return callback(null, true); // allow server-to-server or tools like Postman
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error(`CORS blocked for origin: ${origin}`));
-    }
+    if (!origin) return callback(null, true);
+
+    // Allow localhost for dev
+    if (origin.startsWith('http://localhost:')) return callback(null, true);
+
+    // Allow all deployments under *.vercel.app for your project
+    if (origin.endsWith('.vercel.app')) return callback(null, true);
+
+    callback(new Error(`Not allowed by CORS: ${origin}`));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
+
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // handle preflight

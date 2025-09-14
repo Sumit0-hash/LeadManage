@@ -221,7 +221,7 @@ export const LeadsGrid: React.FC<LeadsGridProps> = ({
       )}
       
       <AgGridReact
-        theme="quartz"
+        theme="legacy"
         rowData={leads}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}

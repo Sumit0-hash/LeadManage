@@ -63,9 +63,9 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     res.cookie('auth_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+      sameSite: 'none',
       maxAge: 24 * 60 * 60 * 1000,
-      domain: process.env.NODE_ENV === 'production' ? process.env.BACKEND_DOMAIN : undefined,
+      domain: process.env.BACKEND_DOMAIN,
     });
 
     res.status(201).json({

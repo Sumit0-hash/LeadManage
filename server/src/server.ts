@@ -22,7 +22,6 @@ const corsOptions = {
       return callback(null, true);
     }
     
-    // Block other origins
     callback(new Error(`Origin not allowed by CORS: ${origin}`));
   },
   credentials: true,
@@ -30,14 +29,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-// --- START OF CORRECTION ---
-
-// 🚨 REMOVED the old, restrictive app.use(cors(...)) and app.options(...) lines.
-// ✅ USE your flexible corsOptions for ALL incoming requests.
 app.use(cors(corsOptions));
-
-// --- END OF CORRECTION ---
-
 
 // Middleware
 app.use(express.json());

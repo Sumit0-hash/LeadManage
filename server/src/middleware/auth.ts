@@ -15,6 +15,7 @@ export const authenticateToken = async (
     const token = req.cookies.auth_token;
 
     if (!token) {
+      console.log('No auth token found in cookies:', req.cookies);
       res.status(401).json({ error: 'Access token required' });
       return;
     }
@@ -28,6 +29,7 @@ export const authenticateToken = async (
     const { data: user, error } = await supabase.auth.admin.getUserById(decoded.userId);
     
     if (error || !user) {
+      console.log('User verification failed:', error);
       res.status(401).json({ error: 'Invalid token' });
       return;
     }

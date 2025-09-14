@@ -5,11 +5,9 @@ import { Lead } from '../types';
 import { Edit, Trash2 } from 'lucide-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-
 import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
-
 
 interface LeadsGridProps {
   leads: Lead[];
@@ -212,7 +210,7 @@ export const LeadsGrid: React.FC<LeadsGridProps> = ({
   };
 
   return (
-    <div className="ag-theme-alpine w-full h-[600px] bg-white rounded-lg shadow border">
+    <div className="w-full h-[600px] bg-white rounded-lg shadow border">
       {loading && (
         <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-10 rounded-lg">
           <div className="flex items-center space-x-2">
@@ -223,6 +221,7 @@ export const LeadsGrid: React.FC<LeadsGridProps> = ({
       )}
       
       <AgGridReact
+        theme="quartz"
         rowData={leads}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
@@ -232,7 +231,7 @@ export const LeadsGrid: React.FC<LeadsGridProps> = ({
         animateRows={true}
         onGridReady={onGridReady}
         suppressRowClickSelection={true}
-        rowSelection="single"
+        rowSelection={{ mode: 'singleRow', enableClickSelection: false }}
       />
     </div>
   );

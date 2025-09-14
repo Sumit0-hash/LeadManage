@@ -126,7 +126,11 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
 export const logout = async (req: Request, res: Response): Promise<void> => {
   try {
-    res.clearCookie('auth_token');
+    res.clearCookie('auth_token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none'
+    });
     res.status(200).json({ message: 'Logout successful' });
   } catch (error) {
     console.error('Logout error:', error);
